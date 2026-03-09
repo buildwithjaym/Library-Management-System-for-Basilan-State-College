@@ -214,10 +214,20 @@ public class Books extends javax.swing.JFrame {
 
         update_btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         update_btn.setText("UPDATE");
+        update_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_btnActionPerformed(evt);
+            }
+        });
         jPanel1.add(update_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 150, -1));
 
         delete_btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         delete_btn.setText("DELETE");
+        delete_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_btnActionPerformed(evt);
+            }
+        });
         jPanel1.add(delete_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 530, 160, -1));
 
         clear.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -251,6 +261,11 @@ public class Books extends javax.swing.JFrame {
     String Author = author.getText().trim();
     int qty = (Integer) jSpinField1.getValue();
     String Category = (String) jComboBox2.getSelectedItem();
+    
+    if (Title.isEmpty() || Author.isEmpty() || qty <= 0 || Category.equals("Select")){
+    JOptionPane.showMessageDialog(this, "Please fill the right value and fields");
+    return;
+    }
     
     try(Connection conn = new library_system_basc.DBConnection().getConnection()){
         String addSQL = "INSERT INTO `books`(`USBN`, `Title`, `Author`, `Quantity`, `Category`, `Date_Added`) VALUES (?,?,?,?,?,NOW())";
@@ -289,14 +304,16 @@ public class Books extends javax.swing.JFrame {
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         //Clear fields
-        jSpinField1.setValue(0);
+        clear();
+        
+    }//GEN-LAST:event_clearActionPerformed
+    public void clear(){
+    jSpinField1.setValue(0);
         usbn.setText("");
         title.setText("");
         author.setText("");
         jComboBox2.setSelectedIndex(0);
-        
-    }//GEN-LAST:event_clearActionPerformed
-
+    }
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
      int row = jTable1.getSelectedRow();
 if (row != -1) {
@@ -328,13 +345,128 @@ if (row != -1) {
 }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
+     int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow == -1) {
+        getToolkit().beep();
+        JOptionPane.showMessageDialog(this, "Please select a book to update");
+        return;
+    }
+
+    Object usbnObj = jTable1.getValueAt(selectedRow, 0);
+    int originalUSBN;
+    if (usbnObj instanceof Integer) {
+        originalUSBN = (Integer) usbnObj;
+    } else if (usbnObj instanceof String) {
+        try {
+            originalUSBN = Integer.parseInt((String) usbnObj);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid ISBN format");
+            return;
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid ISBN data");
+        return;
+    }
+
+   
+    int newUSBN;
+    try {
+        newUSBN = Integer.parseInt(usbn.getText().trim()); 
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid new USBN");
+        return;
+    }
+
+    String Title = title.getText().trim();
+    String Author = author.getText().trim();
+    int Quantity = jSpinField1.getValue();
+    String Category = (String) jComboBox2.getSelectedItem();
+
+    if (Title.isEmpty() || Author.isEmpty() || Quantity == 0 || Category.equals("Select")) {
+        JOptionPane.showMessageDialog(this, "Please fill all the fields correctly");
+        return;
+    }
+
+    try (Connection conn = new library_system_basc.DBConnection().getConnection()) {
+        String updateSQL = "UPDATE books SET USBN=?, Title=?, Author=?, Quantity=?, Category=? WHERE USBN=?";
+        try (PreparedStatement psUpdate = conn.prepareStatement(updateSQL)) {
+            psUpdate.setInt(1, newUSBN);       
+            psUpdate.setString(2, Title);
+            psUpdate.setString(3, Author);
+            psUpdate.setInt(4, Quantity);
+            psUpdate.setString(5, Category);
+            psUpdate.setInt(6, originalUSBN);    
+
+            int affectedRows = psUpdate.executeUpdate();
+
+            if (affectedRows > 0) {
+                JOptionPane.showMessageDialog(this, "Successfully updated the book with USBN " + originalUSBN);
+                loadBooks(); 
+                clear();     
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error updating books: " + e.getMessage());
+    }
+    }//GEN-LAST:event_update_btnActionPerformed
+
+    private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
+       int selectedRow = jTable1.getSelectedRow();
+       if(selectedRow == - 1){
+       JOptionPane.showMessageDialog(this, "Please select a book to delete");
+       return;
+       }
+       
+    Object usbnObj = jTable1.getValueAt(selectedRow, 0);
+    int USBN;
+    if (usbnObj instanceof Integer) {
+        USBN = (Integer) usbnObj;
+    } else if (usbnObj instanceof String) {
+        try {
+            USBN = Integer.parseInt((String) usbnObj);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid ISBN format");
+            return;
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid ISBN data");
+        return;
+    }
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this book? ", "COnfirm Delete", JOptionPane.YES_NO_OPTION);
+    if (confirm != JOptionPane.YES_NO_OPTION){
+    return;
+    }
+    try(Connection conn = new library_system_basc.DBConnection().getConnection()){
+    String DeleteSQL="DELETE FROM books WHERE usbn=?";
+    try(PreparedStatement psDelete = conn.prepareStatement(DeleteSQL)){
+    psDelete.setInt(1, USBN);
+    
+    int affectedRows = psDelete.executeUpdate();
+    if(affectedRows > 0){
+    JOptionPane.showMessageDialog(this, "You successfully deleted the " + USBN);
+    loadBooks();
+    clear();
+    }
+    else{
+    JOptionPane.showMessageDialog(this, "Deletion failed. Book may not exist");
+    }
+    }
+    }catch(SQLException ex){
+    JOptionPane.showMessageDialog(this, "Error");
+    }
+    }//GEN-LAST:event_delete_btnActionPerformed
+    
     
     
     public void loadBooks() {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     model.setRowCount(0); // Clear existing data
 
-    String sql = "SELECT USBN, Title, Author, Quantity, Category FROM books";
+    String sql = "SELECT USBN, Title, Author, Quantity, Category FROM books ORDER BY Title ASC";
 
     try (Connection conn = new library_system_basc.DBConnection().getConnection();
          PreparedStatement ps = conn.prepareStatement(sql);
@@ -352,8 +484,7 @@ if (row != -1) {
         }
 
     } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error loading books: " + e.getMessage());
+        
     }
 }
     /**
