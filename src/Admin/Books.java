@@ -48,9 +48,9 @@ public class Books extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        books = new javax.swing.JLabel();
+        dashboard = new javax.swing.JLabel();
+        reserve = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -69,8 +69,8 @@ public class Books extends javax.swing.JFrame {
         jSpinField1 = new com.toedter.components.JSpinField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        borrow_returns = new javax.swing.JLabel();
+        users = new javax.swing.JLabel();
         update_btn = new javax.swing.JButton();
         delete_btn = new javax.swing.JButton();
         clear = new javax.swing.JButton();
@@ -86,36 +86,36 @@ public class Books extends javax.swing.JFrame {
         jLabel1.setText("Library Management System");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        jLabel2.setBackground(new java.awt.Color(255, 0, 0));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Manage Books");
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        books.setBackground(new java.awt.Color(255, 0, 0));
+        books.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        books.setForeground(new java.awt.Color(255, 0, 0));
+        books.setText("Manage Books");
+        books.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                booksMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, -1, -1));
+        jPanel1.add(books, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Dashboard");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        dashboard.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard.setText("Dashboard");
+        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                dashboardMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, -1, -1));
+        jPanel1.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Reservations");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        reserve.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        reserve.setForeground(new java.awt.Color(255, 255, 255));
+        reserve.setText("Reservations");
+        reserve.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                reserveMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 40, -1, -1));
+        jPanel1.add(reserve, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 40, -1, -1));
 
         jButton1.setBackground(new java.awt.Color(255, 0, 0));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -207,25 +207,25 @@ public class Books extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 600, 420));
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Book Borrowing & Returns");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+        borrow_returns.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        borrow_returns.setForeground(new java.awt.Color(255, 255, 255));
+        borrow_returns.setText("Book Borrowing & Returns");
+        borrow_returns.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
+                borrow_returnsMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, -1, -1));
+        jPanel1.add(borrow_returns, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, -1, -1));
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Manage Users");
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+        users.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        users.setForeground(new java.awt.Color(255, 255, 255));
+        users.setText("Manage Users");
+        users.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
+                usersMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, -1, -1));
+        jPanel1.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, -1, -1));
 
         update_btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         update_btn.setText("UPDATE");
@@ -305,17 +305,17 @@ public class Books extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_save_btnActionPerformed
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
        this.setVisible(false);
        Dashboard object = new Dashboard();
        object.setVisible(true);
-    }//GEN-LAST:event_jLabel3MouseClicked
+    }//GEN-LAST:event_dashboardMouseClicked
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void booksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksMouseClicked
        this.setVisible(false);
        Books object = new Books();
        object.setVisible(true);
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_booksMouseClicked
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         //Clear fields
@@ -475,23 +475,23 @@ if (row != -1) {
     }
     }//GEN-LAST:event_delete_btnActionPerformed
 
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+    private void usersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseClicked
        this.setVisible(false);
        Users object = new Users();
        object.setVisible(true);
-    }//GEN-LAST:event_jLabel14MouseClicked
+    }//GEN-LAST:event_usersMouseClicked
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    private void borrow_returnsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow_returnsMouseClicked
         this.setVisible(false);
         Borrow_Return object = new Borrow_Return();
         object.setVisible(true);
-    }//GEN-LAST:event_jLabel13MouseClicked
+    }//GEN-LAST:event_borrow_returnsMouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void reserveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reserveMouseClicked
        this.setVisible(false);
        Reservations object = new Reservations();
        object.setVisible(true);
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_reserveMouseClicked
     
     
     
@@ -558,7 +558,10 @@ if (row != -1) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField author;
+    private javax.swing.JLabel books;
+    private javax.swing.JLabel borrow_returns;
     private javax.swing.JButton clear;
+    private javax.swing.JLabel dashboard;
     private javax.swing.JButton delete_btn;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -566,11 +569,6 @@ if (row != -1) {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -581,9 +579,11 @@ if (row != -1) {
     private javax.swing.JSeparator jSeparator1;
     private com.toedter.components.JSpinField jSpinField1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel reserve;
     private javax.swing.JButton save_btn;
     private javax.swing.JTextField title;
     private javax.swing.JButton update_btn;
     private javax.swing.JTextField usbn;
+    private javax.swing.JLabel users;
     // End of variables declaration//GEN-END:variables
 }
