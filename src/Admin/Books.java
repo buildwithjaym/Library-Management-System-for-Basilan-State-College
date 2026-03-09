@@ -71,6 +71,9 @@ public class Books extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        update_btn = new javax.swing.JButton();
+        delete_btn = new javax.swing.JButton();
+        clear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -204,9 +207,26 @@ public class Books extends javax.swing.JFrame {
         jLabel14.setText("Manage Users");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, -1, -1));
 
+        update_btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        update_btn.setText("UPDATE");
+        jPanel1.add(update_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 150, -1));
+
+        delete_btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        delete_btn.setText("DELETE");
+        jPanel1.add(delete_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 530, 160, -1));
+
+        clear.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        clear.setText("CLEAR");
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 530, 150, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1190, 570));
 
-        setSize(new java.awt.Dimension(1191, 571));
+        setSize(new java.awt.Dimension(1205, 608));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -251,7 +271,9 @@ public class Books extends javax.swing.JFrame {
     }//GEN-LAST:event_save_btnActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        // TODO add your handling code here:
+       this.setVisible(false);
+       Dashboard object = new Dashboard();
+       object.setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
@@ -259,6 +281,16 @@ public class Books extends javax.swing.JFrame {
        Books object = new Books();
        object.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        //Clear fields
+        jSpinField1.setValue(0);
+        usbn.setText("");
+        title.setText("");
+        author.setText("");
+        jComboBox2.setSelectedIndex(0);
+        
+    }//GEN-LAST:event_clearActionPerformed
 
     
     public void loadBooks() {
@@ -325,6 +357,8 @@ public class Books extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField author;
+    private javax.swing.JButton clear;
+    private javax.swing.JButton delete_btn;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -348,6 +382,7 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton save_btn;
     private javax.swing.JTextField title;
+    private javax.swing.JButton update_btn;
     private javax.swing.JTextField usbn;
     // End of variables declaration//GEN-END:variables
 }
