@@ -5,19 +5,38 @@
  */
 package Admin;
 
+
+import javax.sql.*;
+import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.*;
 /**
  *
  * @author admin
  */
 public class Users extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form Users
      */
     public Users() {
         initComponents();
+        tableModel = (DefaultTableModel) user_table.getModel();
+        loadUserTable();
     }
-
+   private DefaultTableModel tableModel;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,13 +46,442 @@ public class Users extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        books = new javax.swing.JLabel();
+        dashboard = new javax.swing.JLabel();
+        reserve = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        password = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        username = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        id = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        role = new javax.swing.JComboBox<>();
+        save_btn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        user_table = new javax.swing.JTable();
+        borrow_returns = new javax.swing.JLabel();
+        users = new javax.swing.JLabel();
+        update_btn = new javax.swing.JButton();
+        delete_btn = new javax.swing.JButton();
+        clear = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        setSize(new java.awt.Dimension(414, 337));
+        jPanel1.setBackground(new java.awt.Color(102, 0, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Library Management System");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
+        books.setBackground(new java.awt.Color(255, 0, 0));
+        books.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        books.setForeground(new java.awt.Color(255, 255, 255));
+        books.setText("Manage Books");
+        books.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksMouseClicked(evt);
+            }
+        });
+        jPanel1.add(books, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, -1, -1));
+
+        dashboard.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard.setText("Dashboard");
+        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardMouseClicked(evt);
+            }
+        });
+        jPanel1.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, -1, -1));
+
+        reserve.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        reserve.setForeground(new java.awt.Color(255, 255, 255));
+        reserve.setText("Reservations");
+        reserve.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reserveMouseClicked(evt);
+            }
+        });
+        jPanel1.add(reserve, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 40, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setText("Logout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 30, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1190, 40));
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("USBN:");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 160, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Manage Users");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, -1, -1));
+        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 270, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel9.setText("Password:");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
+        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 270, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel7.setText("Username:");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+        jPanel2.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 270, -1));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(204, 0, 51));
+        jLabel11.setText("ID:");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel8.setText("Role:");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+
+        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Librarian", "Student" }));
+        role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(role, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 270, -1));
+
+        save_btn.setBackground(new java.awt.Color(0, 204, 0));
+        save_btn.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        save_btn.setText("Add Users");
+        save_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_btnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(save_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 270, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 410, 340));
+
+        user_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "USername", "Password", "Role"
+            }
+        ));
+        user_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                user_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(user_table);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, 650, 290));
+
+        borrow_returns.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        borrow_returns.setForeground(new java.awt.Color(255, 255, 255));
+        borrow_returns.setText("Book Borrowing & Returns");
+        borrow_returns.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                borrow_returnsMouseClicked(evt);
+            }
+        });
+        jPanel1.add(borrow_returns, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, -1, -1));
+
+        users.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        users.setForeground(new java.awt.Color(255, 0, 0));
+        users.setText("Manage Users");
+        users.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                usersMouseClicked(evt);
+            }
+        });
+        jPanel1.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, -1, -1));
+
+        update_btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        update_btn.setText("UPDATE");
+        update_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(update_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 430, 150, -1));
+
+        delete_btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        delete_btn.setText("DELETE");
+        delete_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(delete_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 430, 160, -1));
+
+        clear.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        clear.setText("CLEAR");
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 430, 150, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1190, 570));
+
+        setSize(new java.awt.Dimension(1203, 607));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void booksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksMouseClicked
+        this.setVisible(false);
+        Books object = new Books();
+        object.setVisible(true);
+    }//GEN-LAST:event_booksMouseClicked
+
+    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
+        this.setVisible(false);
+        Dashboard object = new Dashboard();
+        object.setVisible(true);
+    }//GEN-LAST:event_dashboardMouseClicked
+
+    private void reserveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reserveMouseClicked
+        this.setVisible(false);
+        Reservations object = new Reservations();
+        object.setVisible(true);
+    }//GEN-LAST:event_reserveMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        library_system_basc.Login object = new library_system_basc.Login();
+        object.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
+        int row = user_table.getSelectedRow();
+        if (row != -1) {
+            Object ID = user_table.getValueAt(row, 0);
+            int USBN;
+            if (ID instanceof Integer) {
+                USBN = (Integer) ID;
+            } else if (ID instanceof String) {
+                try {
+                    USBN = Integer.parseInt((String) ID);
+                } catch (NumberFormatException e) {
+                    return;
+                }
+            } else {
+                return;
+            }
+
+            String USer = String.valueOf(user_table.getValueAt(row, 1));
+            String Password = String.valueOf(user_table.getValueAt(row, 2));
+            String Role = String.valueOf(user_table.getValueAt(row, 3));
+
+            // Set your fields
+            id.setText(String.valueOf(USBN));
+            username.setText(USer);
+            password.setText(Password);
+            role.setSelectedItem(Role);
+        }
+    }//GEN-LAST:event_user_tableMouseClicked
+
+    private void borrow_returnsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow_returnsMouseClicked
+        this.setVisible(false);
+        Borrow_Return object = new Borrow_Return();
+        object.setVisible(true);
+    }//GEN-LAST:event_borrow_returnsMouseClicked
+
+    private void usersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseClicked
+        this.setVisible(false);
+        Users object = new Users();
+        object.setVisible(true);
+    }//GEN-LAST:event_usersMouseClicked
+
+    private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
+         int selectedRow = user_table.getSelectedRow();
+    if (selectedRow == -1) {
+        getToolkit().beep();
+        JOptionPane.showMessageDialog(this, "Please select a user to update");
+        return;
+    }
+
+    int ID = (int) user_table.getValueAt(selectedRow, 0);
+    String Username = username.getText().trim();
+    String Password = password.getText().trim();
+    String Role = (String) role.getSelectedItem();
+
+    if (Username.isEmpty() || Password.isEmpty() || Role.equals("Select")) {
+        JOptionPane.showMessageDialog(this, "Please fill all the fields correctly");
+        return;
+    }
+
+    try (Connection conn = new library_system_basc.DBConnection().getConnection()) {
+        String updateSQL = "UPDATE users SET username=?, password=?, role=? WHERE id=?";
+        try (PreparedStatement psUpdate = conn.prepareStatement(updateSQL)) {
+            psUpdate.setString(1, Username);
+            psUpdate.setString(2, Password);
+            psUpdate.setString(3, Role);
+            psUpdate.setInt(4, ID);
+            
+            int affectedRows = psUpdate.executeUpdate();
+
+            if (affectedRows > 0) {
+                JOptionPane.showMessageDialog(this, "Successfully updated user with ID " + ID);
+                loadUserTable();
+                clear();
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error updating user: " + e.getMessage());
+    }
+    }//GEN-LAST:event_update_btnActionPerformed
+
+    private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
+        int selectedRow = user_table.getSelectedRow();
+        if(selectedRow == - 1){
+            JOptionPane.showMessageDialog(this, "Please select a book to delete");
+            return;
+        }
+
+        Object usbnObj = user_table.getValueAt(selectedRow, 0);
+        int USBN;
+        if (usbnObj instanceof Integer) {
+            USBN = (Integer) usbnObj;
+        } else if (usbnObj instanceof String) {
+            try {
+                USBN = Integer.parseInt((String) usbnObj);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Invalid ISBN format");
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid ISBN data");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this book? ", "COnfirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_NO_OPTION){
+            return;
+        }
+        try(Connection conn = new library_system_basc.DBConnection().getConnection()){
+            String DeleteSQL="DELETE FROM books WHERE usbn=?";
+            try(PreparedStatement psDelete = conn.prepareStatement(DeleteSQL)){
+                psDelete.setInt(1, USBN);
+
+                int affectedRows = psDelete.executeUpdate();
+                if(affectedRows > 0){
+                    JOptionPane.showMessageDialog(this, "You successfully deleted the " + USBN);
+                    loadUserTable();
+                    clear();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Deletion failed. Book may not exist");
+                }
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(this, "Error");
+        }
+    }//GEN-LAST:event_delete_btnActionPerformed
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        //Clear fields
+        clear();
+
+    }//GEN-LAST:event_clearActionPerformed
+    public void clear(){
+    id.setText("");
+    username.setText("");
+    password.setText("");
+    role.setSelectedIndex(0);
+    }
+    private void save_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_btnActionPerformed
+        String User_ID= id.getText().trim();
+        String Username = username.getText().trim();
+        String Password = password.getText().trim();
+        String Role = (String) role.getSelectedItem();
+
+        if (User_ID.isEmpty() ||Username.isEmpty() || Password.isEmpty() || Role.equals("Select")){
+            JOptionPane.showMessageDialog(this, "Please fill the right value and fields");
+            return;
+        }
+
+        try(Connection conn = new library_system_basc.DBConnection().getConnection()){
+            String addSQL = "INSERT INTO `users`(`id`, `username`, `password`, `role`) VALUES (?,?,?,?)";
+            try(PreparedStatement ps = conn.prepareStatement(addSQL)){
+                ps.setString(1, User_ID);
+                ps.setString(2, Username);
+                ps.setString(3, Password);
+                ps.setString(4, Role );
+
+                int rows = ps.executeUpdate();
+
+                if (rows > 0) {
+                    Object[] rowData = { User_ID, Username, Password, Role };
+                    tableModel.addRow(rowData);
+                    JOptionPane.showMessageDialog(this, "You Successfully Added " + User_ID);
+                }
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_save_btnActionPerformed
+
+    private void roleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roleActionPerformed
+
+    
+    
+    public void loadUserTable(){
+    DefaultTableModel model = (DefaultTableModel) user_table.getModel();
+    model.setRowCount(0); 
+    
+    String sql="SELECT id, username, password, role FROM users ORDER BY id ASC";
+    try(Connection conn = new library_system_basc.DBConnection().getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery() ){
+            
+        while(rs.next()){
+        int ID = rs.getInt("id");
+        String User = rs.getString("username");
+        String Pass = rs.getString("password");
+        String role = rs.getString("role");
+        
+        Object[] rowData ={ID, User, Pass, role };
+        model.addRow(rowData);
+        }
+ 
+            }catch(SQLException ex){
+    JOptionPane.showMessageDialog(this, "Error on fetching users");
+    }
+    
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -70,5 +518,31 @@ public class Users extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel books;
+    private javax.swing.JLabel borrow_returns;
+    private javax.swing.JButton clear;
+    private javax.swing.JLabel dashboard;
+    private javax.swing.JButton delete_btn;
+    private javax.swing.JTextField id;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField password;
+    private javax.swing.JLabel reserve;
+    private javax.swing.JComboBox<String> role;
+    private javax.swing.JButton save_btn;
+    private javax.swing.JButton update_btn;
+    private javax.swing.JTable user_table;
+    private javax.swing.JTextField username;
+    private javax.swing.JLabel users;
     // End of variables declaration//GEN-END:variables
 }
