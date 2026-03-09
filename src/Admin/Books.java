@@ -193,6 +193,11 @@ public class Books extends javax.swing.JFrame {
                 "USBN", "Title", "Author", "Quantity", "Category"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 600, 420));
@@ -292,6 +297,38 @@ public class Books extends javax.swing.JFrame {
         
     }//GEN-LAST:event_clearActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+     int row = jTable1.getSelectedRow();
+if (row != -1) {
+    Object usbnObj = jTable1.getValueAt(row, 0);
+    int USBN;
+    if (usbnObj instanceof Integer) {
+        USBN = (Integer) usbnObj;
+    } else if (usbnObj instanceof String) {
+        try {
+            USBN = Integer.parseInt((String) usbnObj);
+        } catch (NumberFormatException e) {
+            return;
+        }
+    } else {
+        return;
+    }
+
+    String Title = String.valueOf(jTable1.getValueAt(row, 1));
+    String Author = String.valueOf(jTable1.getValueAt(row, 2));
+    String qtyStr = String.valueOf(jTable1.getValueAt(row, 3));
+    String Category = String.valueOf(jTable1.getValueAt(row, 4));
+
+    // Set your fields
+    usbn.setText(String.valueOf(USBN));
+    title.setText(Title);
+    author.setText(Author);
+    jSpinField1.setValue(Integer.parseInt(qtyStr));
+    jComboBox2.setSelectedItem(Category);
+}
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    
     
     public void loadBooks() {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
